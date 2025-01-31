@@ -1,6 +1,6 @@
 
 /*
- * *** PLACE YOUR NAME / SECTION  HERE ***
+ * *** Michael Wardlow 001 ***
  *
  * Homework # 1 (Programming Assignment). This Java class defines some basic
  * manipulation operations on Linked-Lists and Stacks.
@@ -88,8 +88,18 @@ public class HW1 {
         public void removeElementsLT ( int ltValue ) {
 
             // YOUR CODE GOES HERE
+            while (this.head != null && head.data < ltValue) {      // start at the head of the linked list and then traverse until you find 
+                head = head.next;                                   // the int that is less than ltValue. remove node at head if it is less than ltValue
+            }
 
-            return;
+            Node current_node = head;
+            while (current_node != null && current_node.next != null) {     // check current node and the one after to see if it's null not not
+                if (current_node.next.data < ltValue) {
+                    current_node.next = current_node.next.next;             // if the next node is less than ltValue, delete that node and repalce it with the one after it
+                } else {
+                    current_node = current_node.next;       // if the next node is greater than ltValue, traverse to the next node
+                }
+            }
         }
 
 
@@ -101,8 +111,18 @@ public class HW1 {
         public void removeElement ( int value ) {
 
             // YOUR CODE GOES HERE
+            while (this.head != null && head.data == value) {       // remove nodes at head where they equal the value
+                head = head.next;
+            }
 
-            return;
+            Node current_node = head;
+            while (current_node != null && current_node.next != null) {     // check to see if current node and the next node are not null
+                if (current_node.next.data == value) {
+                    current_node.next = current_node.next.next;     // if the node next to the current node is equal to the value, delete and replace it with the node after
+                } else {
+                    current_node = current_node.next;       // if the node isn't equal to the value, keep traversing the linked list
+                }
+            }
         }
 
 
@@ -160,6 +180,15 @@ public class HW1 {
             Stack<Character> stack = new Stack<>();
             input = input.toLowerCase().replaceAll("\\s+", "");
 
+            for (char c : input.toCharArray()) {        // inserts the string into an array of the characters
+                stack.push(c);                          // pushes the characters onto the stack, reversing the order of the characters (LIFO)
+
+            }
+            for (char c : input.toCharArray()) {
+                if (stack.pop() == c) {         // pop removes and returns the last inserted element. compared the popped character with the
+                    return true;               // current character in the string. If are the same, it is a palindrome. so return true
+                }
+            }
             // Your CODE GOES HERE
             return false;
         }
@@ -178,13 +207,32 @@ public class HW1 {
          * destroy the passed in stack, meaning when the method returns, the passed in
          * stack should be identical to when this method is passed. One trick as you
          * pop elements off the passed in stack, place them in a temp stack. Then when
-         * completed, place them all back in teh original stack.
+         * completed, place them all back in the original stack.
          */
         public static int findLargestK(Stack<Integer> stack, int k) {
 
+            Stack<Integer> tempStack = new Stack<>();   // create a temporary stack to hold original stack elements
+
+            int maxIndex = -1;
+            int index = 0;
+
+            while (!stack.isEmpty()) {
+                int value = stack.pop();    // pop values from the stack
+                if (value == k) {           // check to see if the values being popped are equal to k
+                    maxIndex = index;       // max index = current index when the value is k
+                }
+                tempStack.push(value);        // push values to temp stack                
+                index++;                     // increment index counter
+            }
+
+            while (!tempStack.isEmpty()) {
+                stack.push(tempStack.pop());       // pop and push the temp stack into the original stack in the original order
+            }
+
             // YOUR CODE GOES HERE
-            return -1;
+            return maxIndex;
         }
+
 
     }  // End class Stacks
 
@@ -219,7 +267,7 @@ public class HW1 {
         */
 
         // RETURN THE CORRECT OPTION NUMBER LISTED ABOVE
-        return -1;
+        return 3;
     }
 
 
@@ -240,7 +288,7 @@ public class HW1 {
          */
 
         // RETURN THE CORRECT OPTION LISTED ABOVE
-        return -1;
+        return 2;
     }
 
 }
