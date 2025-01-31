@@ -214,15 +214,15 @@ public class HW1 {
             Stack<Integer> tempStack = new Stack<>();   // create a temporary stack to hold original stack elements
 
             int maxIndex = -1;
-            int index = 0;
+            int index = stack.size() -1;
 
             while (!stack.isEmpty()) {
-                int value = stack.pop();    // pop values from the stack
-                if (value == k) {           // check to see if the values being popped are equal to k
+                int current = stack.pop();    // pop values from the stack
+                if ( index > maxIndex && current == k) {           // check to see if the values being popped are equal to k
                     maxIndex = index;       // max index = current index when the value is k
                 }
-                tempStack.push(value);        // push values to temp stack                
-                index++;                     // increment index counter
+                tempStack.push(current);        // push values to temp stack                
+                index--;                     // decrement index counter
             }
 
             while (!tempStack.isEmpty()) {
@@ -230,7 +230,7 @@ public class HW1 {
             }
 
             // YOUR CODE GOES HERE
-            return maxIndex;
+            return maxIndex;            // return the largest index
         }
 
 
